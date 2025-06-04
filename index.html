@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GPS Location Access</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+      background: #f0f0f0;
+    }
+    .box {
+      background: #fff;
+      padding: 20px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Allow Location Access</h2>
+    <p>Click the button below to get your current GPS location.</p>
+    <button onclick="getLocation()">Get Location</button>
+    <p id="output"></p>
+  </div>
+
+  <script>
+    function getLocation() {
+      const output = document.getElementById("output");
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            output.innerHTML = `
+              📍 Latitude: <b>${lat}</b><br>
+              📍 Longitude: <b>${lon}</b><br>
+              <a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank">Open in Google Maps</a>
+            `;
+          },
+          function(error) {
+            output.textContent = "Location access denied or unavailable.";
+          }
+        );
+      } else {
+        output.textContent = "Geolocation is not supported by this browser.";
+      }
+    }
+  </script>
+</body>
+</html>
